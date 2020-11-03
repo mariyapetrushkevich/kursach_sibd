@@ -7,3 +7,9 @@ class AddDepartment(ModelForm):
     class Meta:
         model = Department
         fields = ['department_name', 'department_code']
+
+
+class AddSpeciality(ModelForm):
+    class Meta:
+        model = Speciality
+        fields = ['speciality_name', 'speciality_code', 'department']

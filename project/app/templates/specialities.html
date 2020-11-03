@@ -79,6 +79,7 @@
 .department_data td a{
     text-decoration: none;
     color: #808080;
+    font-size: 16px;
 }
 
     </style>
@@ -132,22 +133,24 @@
             </nav>
         </header>
         <div class="category_name">
-            <p>Кафедры</p>
+            <p>Специальности</p>
         </div>
         <div class="add_department">
-            <a href="/app/add-department-form">Добавить кафедру</a>
+            <a href="/app/add-speciality-form">Добавить специальность</a>
         </div>
         <table class="department_data" rules="all">
             <tr>
+                <th><b>Код специальности</b></th>
                 <th><b>Название</b></th>
-                <th><b>Код кафедры</b></th>
-                <th>          </th>
+                <th><b>Кафедра</b></th>
+                <th>         </th>
             </tr>
-            {% for department in all_departments %}
+            {% for speciality in all_specialities %}
             <tr>
-                <td>{{department.department_name}}</td>
-                <td>{{department.department_code}}</td>
-                <td><a href="/app/department_edit/{{department.id}}">Редактировать</a> | <a href="/app/department_delete/{{department.id}}">Удалить</a></td>
+                <td>{{speciality.speciality_code}}</td>
+                <td>{{speciality.speciality_name}}</td>
+                <td>{{speciality.department}}</td>
+                <td><a href="/app/department_edit/{{speciality.id}}">Редактировать</a> | <a href="/app/department_delete/{{speciality.id}}">Удалить</a></td>
             </tr>
             {% endfor %}
         </table>

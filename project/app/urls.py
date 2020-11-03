@@ -28,5 +28,10 @@ urlpatterns = [
     path('vedomosti/', views.VedomostiView.as_view()),
     path('spravki/', views.SpravkiView.as_view()),
     path('add-department-form/', views.AddDepartmentView.as_view()),
-    path('add-department/', views.add_department)
+    path('add-department/', views.add_department),
+    path('department_edit/<int:id>/', views.edit_department),
+    path('department_delete/<int:id>/', views.delete_department),
+    path('add-speciality-form/', views.AddSpecialityView.as_view()),
+    # path('speciality_edit/<int:id>/', views.edit_speciality),
+    # path('speciality_delete/<int:id>/', views.delete_speciality),
 ]
