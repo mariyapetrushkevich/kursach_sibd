@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование информации о специальности</title>
+</head>
+<body>
+    <div class="container">
+        <form method="post">
+            {% csrf_token %}
+            <p>
+                <label for="name_input">Новое название специальности</label><br>
+                <input id="name_input" type="text" value="{{speciality.speciality_name}}">
+            </p>
+            <p>
+                <label for="code_input">Новый код специальности</label><br>
+                <input id="code_input" type="number" value="{{speciality.speciality_code}}">
+            </p>
+            <p>
+                <label for="depart_input">Новая кафедра</label><br>
+                <input id="depart_input" type="text" value="{{speciality.department}}">
+            </p>
+            <input type="submit" value="Сохранить">
+        </form>
+    </div>
+
+</body>
+</html>

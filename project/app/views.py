@@ -129,3 +129,19 @@ class AddSpecialityView(TemplateView):
         if form.is_valid():
             form.save()
             return HttpResponseRedirect('/app/specialities')
+
+
+def edit_speciality(request, id):
+    try:
+        speciality = Speciality.objects.get(id=id)
+
+        if request.method == 'POST':
+            speciality.speciality_name = request.POST.get("speciality_name")
+            speciality.speciality_code = request.POST.get("speciality_code")
+            speciality.department = request.POST.get("department")
+            speciality.save()
+            return HttpResponseRedirect('/app/specialities/')
+        else:
+            return render(request, "department_edit.html", {'speciality': speciality})
+    except Speciality.DoesNotExist:
+        return HttpResponseNotFound("<h2>Такая специальность не найдена</h2>")
