@@ -130,6 +130,28 @@ class AddSpecialityView(TemplateView):
             form.save()
             return HttpResponseRedirect('/app/specialities')
 
+class EditSpeciality(TemplateView):
+    template_name = 'edit_speciality.html'
+    form = forms.AddSpeciality
+
+    def get(self, request, id):
+        context = {
+            'speciality_form': self.form
+        }
+        return render(request, self.template_name, context)
+
+    def post(self, request, id):
+        form = forms.AddSpeciality(request.POST)
+        try:
+            if form.is_valid():
+                speciality = Speciality.objects.get(id=id)
+                speciality.speciality_name = form.instance.speciality_name
+                speciality.speciality_code = form.instance.speciality_code
+                speciality.department = form.instance.department
+                speciality.save()
+                return HttpResponseRedirect('/app/specialities/')
+        except Speciality.DoesNotExist:
+            return HttpResponseNotFound("<h2>Такая специальность не найдена</h2>")
 
 def edit_speciality(request, id):
     try:
@@ -142,6 +164,15 @@ def edit_speciality(request, id):
             speciality.save()
             return HttpResponseRedirect('/app/specialities/')
         else:
-            return render(request, "department_edit.html", {'speciality': speciality})
+            return render(request, "speciality_edit.html", {'speciality': speciality})
     except Speciality.DoesNotExist:
         return HttpResponseNotFound("<h2>Такая специальность не найдена</h2>")
+
+
+def delete_speciality(request, id):
+    try:
+        speciality = Speciality.objects.get(id=id)
+        speciality.delete()
+        return HttpResponseRedirect("/app/specialities")
+    except Department.DoesNotExist:
+        return HttpResponseNotFound("<h2>Такая Специальность не найдена</h2>")

@@ -7,19 +7,37 @@
         .form {
             width: 350px;
             text-align: center;
+            font-family: 'Century Gothic';
             border: 2px solid #778899;
             border-radius: 15px;
-            margin: 0 auto;
+            margin:auto;
+            margin-top: 15%;
+        }
+
+        .form label[for=id_department_name] {
+            margin-left: 35px;
+        }
+
+        .form input[type=text] {
+            border: 1px solid #C0C0C0;
+            border-radius: 3px;
+            background-color: #ffffff;
         }
 
         .form input[type=submit] {
+            border: 1px solid #C0C0C0;
+            border-radius: 3px;
             margin-bottom: 10px;
+            background-color: #ffffff;
+            padding: 5px;
+            margin-left: 20px;
+            font-family: 'Century Gothic';
         }
     </style>
 </head>
 <body>
     <div class="form">
-        <h1>Добавить кафедру</h1>
+        <h2>Добавить кафедру</h2>
         <form action="/app/add-department/" method="post">
             {% csrf_token %}
             {{ department_form.as_p }}

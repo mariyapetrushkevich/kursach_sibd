@@ -12,9 +12,9 @@ class Department(models.Model):
 
 
 class Speciality(models.Model):
-    department = models.ForeignKey(Department, on_delete=models.CASCADE, verbose_name='Кафедра')
-    speciality_name = models.CharField(max_length=100, verbose_name='Специальность')
-    speciality_code = models.CharField(max_length=20, verbose_name='Код специальности')
+    department = models.ForeignKey(Department, blank=True, null=True, on_delete=models.CASCADE, verbose_name='Кафедра')
+    speciality_name = models.CharField(max_length=100, null=True, verbose_name='Специальность')
+    speciality_code = models.CharField(max_length=20, null=True, verbose_name='Код специальности')
 
     def __str__(self):
         return self.speciality_name

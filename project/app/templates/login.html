@@ -34,7 +34,7 @@
     <div id="header">
         <div id="branding">
 
-<h1 id="site-name"><a href="/deanery/login/">Faculty administration</a></h1>
+<h1 id="site-name"><a href="/deanery/login/">Администрация факультета</a></h1>
 
         </div>
 
@@ -69,17 +69,17 @@
     {%csrf_token%}
   <div class="form-row">
 
-    <label class="required" for="id_username">Username:</label> <input type="text" name="username" autofocus autocapitalize="none" autocomplete="username" maxlength="150" required id="id_username">
+    <label class="required" for="id_username">Логин:</label> <input type="text" name="username" autofocus autocapitalize="none" autocomplete="username" maxlength="150" required id="id_username">
   </div>
   <div class="form-row">
 
-    <label class="required" for="id_password">Password:</label> <input type="password" name="password" autocomplete="current-password" required id="id_password">
+    <label class="required" for="id_password">Пароль:</label> <input type="password" name="password" autocomplete="current-password" required id="id_password">
     <input type="hidden" name="next" value="/admin/">
   </div>
 
 
   <div class="submit-row">
-    <input type="submit" value="Log in">
+    <input type="submit" value="Войти">
   </div>
 </form>
 

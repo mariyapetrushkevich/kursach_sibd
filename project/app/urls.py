@@ -32,6 +32,6 @@ urlpatterns = [
     path('department_edit/<int:id>/', views.edit_department),
     path('department_delete/<int:id>/', views.delete_department),
     path('add-speciality-form/', views.AddSpecialityView.as_view()),
-    # path('speciality_edit/<int:id>/', views.edit_speciality),
-    # path('speciality_delete/<int:id>/', views.delete_speciality),
+    path('speciality_edit/<int:id>/', views.EditSpeciality.as_view()),
+    path('speciality_delete/<int:id>/', views.delete_speciality),
 ]
