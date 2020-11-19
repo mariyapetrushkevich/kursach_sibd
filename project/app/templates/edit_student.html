@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование информации о студенте</title>
+    <style>
+        .form {
+            width: 450px;
+            text-align: center;
+            border: 2px solid #778899;
+            border-radius: 15px;
+            margin: 0 auto;
+        }
+
+        .form input[type=submit] {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="form">
+        <h1>Редактировать студента</h1>
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ student_form.as_p }}
+            <input type="submit" value="Сохранить">
+        </form>
+    </div>
+</body>
+</html>

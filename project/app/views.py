@@ -62,7 +62,13 @@ class GroupsView(TemplateView):
 
 
 class StudentsView(TemplateView):
-    pass
+    template_name = 'students.html'
+    def get(self, request):
+        if request.user.is_authenticated:
+            all_students = Student.objects.all()
+            context = {'all_students': all_students}
+
+            return render(request, self.template_name, context)
 
 
 class DisciplinesView(TemplateView):
@@ -93,13 +99,6 @@ class AddDepartmentView(TemplateView):
             if form.is_valid():
                 form.save()
                 return HttpResponseRedirect('/app/departments/')
-
-# def add_department(request):
-#     form = forms.AddDepartment(request.POST)
-#     if request.method == "POST":
-#         if form.is_valid():
-#             form.save()
-#             return HttpResponseRedirect('/app/departments/')
 
 
 def edit_department(request, id):
@@ -166,22 +165,6 @@ class EditSpecialityView(TemplateView):
             return HttpResponseNotFound("<h2>Такая специальность не найдена</h2>")
 
 
-# def edit_speciality(request, id):
-#     try:
-#         speciality = Speciality.objects.get(id=id)
-#
-#         if request.method == 'POST':
-#             speciality.speciality_name = request.POST.get("speciality_name")
-#             speciality.speciality_code = request.POST.get("speciality_code")
-#             speciality.department = request.POST.get("department")
-#             speciality.save()
-#             return HttpResponseRedirect('/app/specialities/')
-#         else:
-#             return render(request, "speciality_edit.html", {'speciality': speciality})
-#     except Speciality.DoesNotExist:
-#         return HttpResponseNotFound("<h2>Такая специальность не найдена</h2>")
-
-
 def delete_speciality(request, id):
     try:
         speciality = Speciality.objects.get(id=id)
@@ -241,3 +224,57 @@ def delete_group(request, id):
         return HttpResponseRedirect("/app/groups")
     except Department.DoesNotExist:
         return HttpResponseNotFound("<h2>Такая группа не найдена</h2>")
+
+
+class AddStudentView(TemplateView):
+    template_name = 'add_student.html'
+    form = forms.AddStudent
+
+    def get(self, request):
+        context = {
+            'student_form': self.form
+        }
+        return render(request, self.template_name, context)
+
+    def post(self, request):
+        form = forms.AddStudent(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/app/students')
+
+
+class EditStudentView(TemplateView):
+    template_name = 'edit_student.html'
+    form = forms.AddStudent
+
+    def get(self, request, id):
+        context = {
+            'student_form': self.form
+        }
+        return render(request, self.template_name, context)
+
+    def post(self, request, id):
+        form = forms.AddStudent(request.POST)
+        try:
+            if form.is_valid():
+                student = Student.objects.get(id=id)
+                student.surname = form.instance.surname
+                student.first_name = form.instance.first_name
+                student.patronymic = form.instance.patronymic
+                student.group = form.instance.group
+                student.stud_number = form.instance.stud_number
+                student.address = form.instance.address
+                student.avg_score = form.instance.avg_score
+                student.save()
+                return HttpResponseRedirect('/app/students/')
+        except Student.DoesNotExist:
+            return HttpResponseNotFound("<h2>Такой студент не найдена</h2>")
+
+
+def delete_student(request, id):
+    try:
+        student = Student.objects.get(id=id)
+        student.delete()
+        return HttpResponseRedirect("/app/students")
+    except Student.DoesNotExist:
+        return HttpResponseNotFound("<h2>Такой студент не найден</h2>")

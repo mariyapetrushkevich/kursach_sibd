@@ -19,3 +19,9 @@ class AddGroup(ModelForm):
     class Meta:
         model = Group
         fields = ['group_number', 'speciality', 'form_year', 'course', 'form_of_learning']
+        
+        
+class AddStudent(ModelForm):
+    class Meta:
+        model = Student
+        fields = ['surname', 'first_name', 'patronymic', 'group', 'stud_number', 'address', 'avg_score']
