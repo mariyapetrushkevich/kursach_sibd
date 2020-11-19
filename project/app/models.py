@@ -22,10 +22,10 @@ class Speciality(models.Model):
 
 class Group(models.Model):
     speciality = models.ForeignKey(Speciality, on_delete=models.CASCADE, verbose_name='Специальность')
-    group_number = models.IntegerField(verbose_name='Номер группы')
+    group_number = models.CharField(max_length=15, verbose_name='Номер группы')
     form_year = models.IntegerField(verbose_name='Год формирования')
     course = models.SmallIntegerField(verbose_name='Курс')
-    form_of_learning = models.CharField(max_length=10)
+    form_of_learning = models.CharField(max_length=10, verbose_name='Форма обучения')
 
     def __str__(self):
         return self.group_number

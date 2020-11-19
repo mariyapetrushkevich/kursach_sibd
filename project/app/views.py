@@ -52,7 +52,13 @@ class SpecialitiesView(TemplateView):
 
 
 class GroupsView(TemplateView):
-    pass
+    template_name = 'groups.html'
+    def get(self, request):
+        if request.user.is_authenticated:
+            all_groups = Group.objects.all()
+            context = {'all_groups': all_groups}
+
+            return render(request, self.template_name, context)
 
 
 class StudentsView(TemplateView):
@@ -81,13 +87,19 @@ class AddDepartmentView(TemplateView):
         }
         return render(request, self.template_name, context)
 
+    def post(self, request):
+        form = forms.AddDepartment(request.POST)
+        if request.method == "POST":
+            if form.is_valid():
+                form.save()
+                return HttpResponseRedirect('/app/departments/')
 
-def add_department(request):
-    form = forms.AddDepartment(request.POST)
-    if request.method == "POST":
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/app/departments/')
+# def add_department(request):
+#     form = forms.AddDepartment(request.POST)
+#     if request.method == "POST":
+#         if form.is_valid():
+#             form.save()
+#             return HttpResponseRedirect('/app/departments/')
 
 
 def edit_department(request, id):
@@ -130,7 +142,7 @@ class AddSpecialityView(TemplateView):
             form.save()
             return HttpResponseRedirect('/app/specialities')
 
-class EditSpeciality(TemplateView):
+class EditSpecialityView(TemplateView):
     template_name = 'edit_speciality.html'
     form = forms.AddSpeciality
 
@@ -153,20 +165,21 @@ class EditSpeciality(TemplateView):
         except Speciality.DoesNotExist:
             return HttpResponseNotFound("<h2>Такая специальность не найдена</h2>")
 
-def edit_speciality(request, id):
-    try:
-        speciality = Speciality.objects.get(id=id)
 
-        if request.method == 'POST':
-            speciality.speciality_name = request.POST.get("speciality_name")
-            speciality.speciality_code = request.POST.get("speciality_code")
-            speciality.department = request.POST.get("department")
-            speciality.save()
-            return HttpResponseRedirect('/app/specialities/')
-        else:
-            return render(request, "speciality_edit.html", {'speciality': speciality})
-    except Speciality.DoesNotExist:
-        return HttpResponseNotFound("<h2>Такая специальность не найдена</h2>")
+# def edit_speciality(request, id):
+#     try:
+#         speciality = Speciality.objects.get(id=id)
+#
+#         if request.method == 'POST':
+#             speciality.speciality_name = request.POST.get("speciality_name")
+#             speciality.speciality_code = request.POST.get("speciality_code")
+#             speciality.department = request.POST.get("department")
+#             speciality.save()
+#             return HttpResponseRedirect('/app/specialities/')
+#         else:
+#             return render(request, "speciality_edit.html", {'speciality': speciality})
+#     except Speciality.DoesNotExist:
+#         return HttpResponseNotFound("<h2>Такая специальность не найдена</h2>")
 
 
 def delete_speciality(request, id):
@@ -176,3 +189,55 @@ def delete_speciality(request, id):
         return HttpResponseRedirect("/app/specialities")
     except Department.DoesNotExist:
         return HttpResponseNotFound("<h2>Такая Специальность не найдена</h2>")
+
+
+class AddGroupView(TemplateView):
+    template_name = 'add_group.html'
+    form = forms.AddGroup
+
+    def get(self, request):
+        context = {
+            'group_form': self.form
+        }
+        return render(request, self.template_name, context)
+
+    def post(self, request):
+        form = forms.AddGroup(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/app/groups')
+
+
+class EditGroupView(TemplateView):
+    template_name = 'edit_group.html'
+    form = forms.AddGroup
+
+    def get(self, request, id):
+        context = {
+            'group_form': self.form
+        }
+        return render(request, self.template_name, context)
+
+    def post(self, request, id):
+        form = forms.AddGroup(request.POST)
+        try:
+            if form.is_valid():
+                group = Group.objects.get(id=id)
+                group.group_number = form.instance.group_number
+                group.speciality = form.instance.speciality
+                group.form_year = form.instance.form_year
+                group.course = form.instance.course
+                group.form_of_learning = form.instance.form_of_learning
+                group.save()
+                return HttpResponseRedirect('/app/specialities/')
+        except Speciality.DoesNotExist:
+            return HttpResponseNotFound("<h2>Такая группа не найдена</h2>")
+
+
+def delete_group(request, id):
+    try:
+        group = Group.objects.get(id=id)
+        group.delete()
+        return HttpResponseRedirect("/app/groups")
+    except Department.DoesNotExist:
+        return HttpResponseNotFound("<h2>Такая группа не найдена</h2>")

@@ -2,20 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Добавление кафедры</title>
+    <title>Добавление группы</title>
     <style>
         .form {
-            width: 350px;
+            width: 650px;
             text-align: center;
-            font-family: 'Century Gothic';
             border: 2px solid #778899;
             border-radius: 15px;
-            margin:auto;
-            margin-top: 15%;
-        }
-
-        .form label[for=id_department_name] {
-            margin-left: 35px;
+            margin: 0 auto;
+            font-family: 'Century Gothic';
         }
 
         .form input[type=text] {
@@ -33,14 +28,19 @@
             margin-left: 20px;
             font-family: 'Century Gothic';
         }
+        .form input[type=number], select {
+            border: 1px solid #C0C0C0;
+            border-radius: 3px;
+            background-color: #ffffff;
+        }
     </style>
 </head>
 <body>
     <div class="form">
-        <h2>Добавить кафедру</h2>
+        <h1>Добавить группу</h1>
         <form action="" method="post">
             {% csrf_token %}
-            {{ department_form.as_p }}
+            {{ group_form.as_p }}
             <input type="submit" value="Добавить">
         </form>
     </div>
