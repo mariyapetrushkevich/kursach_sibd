@@ -25,3 +25,9 @@ class AddStudent(ModelForm):
     class Meta:
         model = Student
         fields = ['surname', 'first_name', 'patronymic', 'group', 'stud_number', 'address', 'avg_score']
+
+
+class AddDiscipline(ModelForm):
+    class Meta:
+        model = Discipline
+        fields = ['discipline_name', 'teachers', 'form_of_attestation']

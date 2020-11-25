@@ -45,8 +45,8 @@ class Student(models.Model):
 
 
 class Discipline(models.Model):
-    discipline_name = models.CharField(max_length=50, verbose_name='Название дисциплины')
-    teachers = models.CharField(max_length=60, verbose_name='Преподаватели')
+    discipline_name = models.CharField(max_length=80, verbose_name='Название дисциплины')
+    teachers = models.CharField(max_length=70, verbose_name='Преподаватели')
     form_of_attestation = models.CharField(max_length=10, verbose_name='Форма аттестации')
 
     def __str__(self):

@@ -72,7 +72,13 @@ class StudentsView(TemplateView):
 
 
 class DisciplinesView(TemplateView):
-    pass
+    template_name = 'disciplines.html'
+    def get(self, request):
+        if request.user.is_authenticated:
+            all_disciplines = Discipline.objects.all()
+            context = {'all_disciplines': all_disciplines}
+
+            return render(request, self.template_name, context)
 
 
 class VedomostiView(TemplateView):
@@ -278,3 +284,54 @@ def delete_student(request, id):
         return HttpResponseRedirect("/app/students")
     except Student.DoesNotExist:
         return HttpResponseNotFound("<h2>Такой студент не найден</h2>")
+
+
+class AddDisciplineView(TemplateView):
+    template_name = 'add_discipline.html'
+    form = forms.AddDiscipline
+
+    def get(self, request):
+        context = {
+            'discipline_form': self.form
+        }
+        return render(request, self.template_name, context)
+
+    def post(self, request):
+        form = forms.AddDiscipline(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/app/disciplines')
+
+
+class EditDisciplineView(TemplateView):
+    template_name = 'edit_discipline.html'
+    form = forms.AddDiscipline
+
+    def get(self, request, id):
+        context = {
+            'discipline_form': self.form
+        }
+        return render(request, self.template_name, context)
+
+    def post(self, request, id):
+        form = forms.AddDiscipline(request.POST)
+        try:
+            if form.is_valid():
+                discipline = Discipline.objects.get(id=id)
+                discipline.discipline_name = form.instance.discipline_name
+                discipline.teachers = form.instance.teachers
+                discipline.form_of_attestation = form.instance.form_of_attestation
+                discipline.save()
+                return HttpResponseRedirect('/app/disciplines/')
+        except Student.DoesNotExist:
+            return HttpResponseNotFound("<h2>Такая дисциплина не найдена</h2>")
+
+
+def delete_discipline(request, id):
+    try:
+        discipline = Discipline.objects.get(id=id)
+        discipline.delete()
+        return HttpResponseRedirect("/app/disciplines")
+
+    except Discipline.DoesNotExist:
+        return HttpResponseNotFound("<h2>Такая дисциплина не найдена</h2>")

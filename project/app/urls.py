@@ -28,7 +28,6 @@ urlpatterns = [
     path('vedomosti/', views.VedomostiView.as_view()),
     path('spravki/', views.SpravkiView.as_view()),
     path('add-department-form/', views.AddDepartmentView.as_view()),
-    # path('add-department/', views.add_department),
     path('department_edit/<int:id>/', views.edit_department),
     path('department_delete/<int:id>/', views.delete_department),
     path('add-speciality-form/', views.AddSpecialityView.as_view()),
@@ -39,5 +38,8 @@ urlpatterns = [
     path('group_delete/<int:id>/', views.delete_group),
     path('add_student', views.AddStudentView.as_view()),
     path('student_edit/<int:id>/', views.EditStudentView.as_view()),
-    path('student_delete/<int:id>/', views.delete_student)
+    path('student_delete/<int:id>/', views.delete_student),
+    path('add_discipline/', views.AddDisciplineView.as_view()),
+    path('edit_discipline/<int:id>/', views.EditDisciplineView.as_view()),
+    path('delete_discipline/<int:id>/', views.delete_discipline),
 ]
