@@ -1,0 +1,166 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Факультет компьютерного проектирования</title>
+    <link rel="stylesheet" type="text/css" href=" {% static 'css/style.css' %} ">
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <style>
+        body {
+            background-color: #FFEFD5;
+        }
+
+* {
+    font-family: 'Century Gothic';
+}
+.container {
+    max-width: 1440px;
+    margin: auto;
+    top: 0;
+    background-color: #ffffff;
+}
+
+.nav_bar {
+    display: flex;
+    justify-content: space-around;
+    top: 0;
+
+}
+
+.nav_bar a {
+    # font-family: 'sans-serif';
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 30px;
+    color: #ffffff;
+    text-decoration: none;
+    margin: 40px;
+}
+
+.add_department {
+    margin-left: 38px;
+}
+
+.add_department a {
+    text-decoration: none;
+    color: #808080;
+    font-size: 18px;
+}
+
+.category_name {
+    margin-top: 20px;
+    margin-left: 38px;
+    # font-family: 'sans-serif';
+    font-size: 36px;
+    font-weight: 400;
+    line-height: 40px;
+}
+
+.department_data {
+    margin: auto;
+    width: 1371px;
+    margin-top: 50px;
+    cellspacing: 0;
+    cellpadding: 0;
+    background-color: #FFF5EE;
+    border: 1px solid #808080;
+    margin-bottom: 20px;
+}
+
+.department_data td, th {
+    text-align: left;
+    padding: 10px;
+    # font-family: 'sans-serif';
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.department_data td a{
+    text-decoration: none;
+    color: #808080;
+    font-size: 16px;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header style="background-color: #BC8F8F; height: 35px;">
+            <nav>
+                <div class="nav_bar">
+                    <div>
+                        <a href="/app/departments/">
+                            Кафедры
+                        </a>
+                    </div>
+                    <div>
+                        <a href="/app/specialities/">
+                            Специальности
+                        </a>
+                    </div>
+                    <div>
+                        <a href="/app/groups/">
+                            Группы
+                        </a>
+                    </div>
+                    <div>
+                        <a href="/app/students/">
+                            Студенты
+                        </a>
+                    </div>
+                    <div>
+                        <a href="/app/disciplines/">
+                            Дисциплины
+                        </a>
+                    </div>
+                    <div>
+                        <a href="/app/vedomosti/">
+                            Ведомости
+                        </a>
+                    </div>
+                    <div>
+                        <a href="/app/spravki/">
+                            Справки
+                        </a>
+                    </div>
+                    <div>
+                        <a href="/app/login/">
+                            Выйти
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <div class="category_name">
+            <p>Ведомости</p>
+        </div>
+        <div class="add_department">
+            <a href="/app/add_vedomost">Добавить ведомость</a>
+        </div>
+        <table class="department_data" rules="all">
+            <tr>
+                <th><b>Дисциплина</b></th>
+                <th><b>Студент-заказчик</b></th>
+                <th><b>Название</b></th>
+                <th>         </th>
+            </tr>
+            {% for vedomost in all_vedomosti %}
+            <tr>
+                <td>{{vedomost.discipline}}</td>
+                <td>{% for student in vedomost.student_keeper.all%}
+                    {{student}}<br>
+                    {% endfor %}
+                </td>
+                <td>{{vedomost.vedomost_name}}</td>
+                <td><a href="/app/delete_vedomost/{{vedomost.id}}">Удалить</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+        <br><br>
+
+    </div>
+
+
+</body>
+</html>

@@ -42,4 +42,6 @@ urlpatterns = [
     path('add_discipline/', views.AddDisciplineView.as_view()),
     path('edit_discipline/<int:id>/', views.EditDisciplineView.as_view()),
     path('delete_discipline/<int:id>/', views.delete_discipline),
+    path('add_vedomost/', views.AddVedomostView.as_view()),
+    path('delete_vedomost/<int:id>/', views.delete_vedomost)
 ]

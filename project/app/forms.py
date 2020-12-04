@@ -31,3 +31,9 @@ class AddDiscipline(ModelForm):
     class Meta:
         model = Discipline
         fields = ['discipline_name', 'teachers', 'form_of_attestation']
+
+
+class AddVedomost(ModelForm):
+    class Meta:
+        model = Vedomost
+        fields = ['discipline', 'student_keeper', 'vedomost_name']

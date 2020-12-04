@@ -82,11 +82,23 @@ class DisciplinesView(TemplateView):
 
 
 class VedomostiView(TemplateView):
-    pass
+    template_name = 'vedomosti.html'
+    def get(self, request):
+        if request.user.is_authenticated:
+            all_vedomosti = Vedomost.objects.all()
+            context = {'all_vedomosti': all_vedomosti}
+
+            return render(request, self.template_name, context)
 
 
 class SpravkiView(TemplateView):
-    pass
+    template_name = 'spravki.html'
+    def get(self, request):
+        if request.user.is_authenticated:
+            all_spravki = Spravki.objects.all()
+            context = {'all_spravki': all_spravki}
+
+            return render(request, self.template_name, context)
 
 
 class AddDepartmentView(TemplateView):
@@ -335,3 +347,30 @@ def delete_discipline(request, id):
 
     except Discipline.DoesNotExist:
         return HttpResponseNotFound("<h2>Такая дисциплина не найдена</h2>")
+
+
+class AddVedomostView(TemplateView):
+    template_name = 'add_vedomost.html'
+    form = forms.AddVedomost
+
+    def get(self, request):
+        context = {
+            'vedomost_form': self.form
+        }
+        return render(request, self.template_name, context)
+
+    def post(self, request):
+        form = forms.AddVedomost(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/app/vedomosti')
+
+
+def delete_vedomost(request, id):
+    try:
+        vedomost = Vedomost.objects.get(id=id)
+        vedomost.delete()
+        return HttpResponseRedirect("/app/vedomosti")
+
+    except Vedomost.DoesNotExist:
+        return HttpResponseNotFound("<h2>Такая ведомость не найдена</h2>")
