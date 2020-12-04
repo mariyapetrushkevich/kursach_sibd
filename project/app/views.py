@@ -374,3 +374,30 @@ def delete_vedomost(request, id):
 
     except Vedomost.DoesNotExist:
         return HttpResponseNotFound("<h2>Такая ведомость не найдена</h2>")
+
+
+class AddSpravkaView(TemplateView):
+    template_name = 'add_spravka.html'
+    form = forms.AddSpravka
+
+    def get(self, request):
+        context = {
+            'spravka_form': self.form
+        }
+        return render(request, self.template_name, context)
+
+    def post(self, request):
+        form = forms.AddSpravka(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/app/spravki')
+
+
+def delete_spravka(request, id):
+    try:
+        spravka = Spravki.objects.get(id=id)
+        spravka.delete()
+        return HttpResponseRedirect("/app/spravki")
+
+    except Spravki.DoesNotExist:
+        return HttpResponseNotFound("<h2>Такая справка не найдена</h2>")

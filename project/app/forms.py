@@ -37,3 +37,9 @@ class AddVedomost(ModelForm):
     class Meta:
         model = Vedomost
         fields = ['discipline', 'student_keeper', 'vedomost_name']
+
+
+class AddSpravka(ModelForm):
+    class Meta:
+        model = Spravki
+        fields = ['student_keeper', 'spravka_name']
