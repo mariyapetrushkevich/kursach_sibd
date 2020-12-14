@@ -1,6 +1,6 @@
 /project/app/migrations/
 /pyvenv.cfg
-/project/db.sqlite3
+
 /Include/
 /Lib/
 /.idea
