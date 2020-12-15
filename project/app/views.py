@@ -53,6 +53,7 @@ class SpecialitiesView(TemplateView):
 
 class GroupsView(TemplateView):
     template_name = 'groups.html'
+
     def get(self, request):
         if request.user.is_authenticated:
             all_groups = Group.objects.all()
@@ -63,6 +64,7 @@ class GroupsView(TemplateView):
 
 class StudentsView(TemplateView):
     template_name = 'students.html'
+
     def get(self, request):
         if request.user.is_authenticated:
             all_students = Student.objects.all()
@@ -73,6 +75,7 @@ class StudentsView(TemplateView):
 
 class DisciplinesView(TemplateView):
     template_name = 'disciplines.html'
+
     def get(self, request):
         if request.user.is_authenticated:
             all_disciplines = Discipline.objects.all()
@@ -159,6 +162,7 @@ class AddSpecialityView(TemplateView):
             form.save()
             return HttpResponseRedirect('/app/specialities')
 
+
 class EditSpecialityView(TemplateView):
     template_name = 'edit_speciality.html'
     form = forms.AddSpeciality
@@ -244,6 +248,19 @@ def delete_group(request, id):
         return HttpResponseNotFound("<h2>Такая группа не найдена</h2>")
 
 
+class FilterGroup(TemplateView):
+    template_name = 'groups.html'
+
+    def get(self, request):
+        query = request.GET.get('q')
+        all_groups = Group.objects.filter(course__icontains=query)
+        context = {
+            'all_groups': all_groups
+        }
+        return render(request, self.template_name, context)
+
+
+
 class AddStudentView(TemplateView):
     template_name = 'add_student.html'
     form = forms.AddStudent
@@ -286,7 +303,7 @@ class EditStudentView(TemplateView):
                 student.save()
                 return HttpResponseRedirect('/app/students/')
         except Student.DoesNotExist:
-            return HttpResponseNotFound("<h2>Такой студент не найдена</h2>")
+            return HttpResponseNotFound("<h2>Такой студент не найден</h2>")
 
 
 def delete_student(request, id):
@@ -297,6 +314,51 @@ def delete_student(request, id):
     except Student.DoesNotExist:
         return HttpResponseNotFound("<h2>Такой студент не найден</h2>")
 
+
+class StudentSearchResultView(TemplateView):
+    template_name = 'students.html'
+
+    def get(self, request):
+        query = request.GET.get('q')
+        all_students = Student.objects.filter(surname__icontains=query)
+        context = {
+            'all_students': all_students
+        }
+        return render(request, self.template_name, context)
+
+
+class FilteredStudentView(TemplateView):
+    template_name = 'students.html'
+
+    def get(self, request):
+        query = request.GET.get('g')
+        all_students = Student.objects.filter(stud_number__icontains=query)
+        context = {
+            'all_students': all_students
+        }
+        return render(request, self.template_name, context)
+
+
+class StudentSortedAsc(TemplateView):
+    template_name = 'students.html'
+
+    def get(self, request):
+        all_students = Student.objects.all().order_by('surname')
+        context = {
+            'all_students': all_students
+        }
+        return render(request, self.template_name, context)
+
+
+class StudentSortedDesc(TemplateView):
+    template_name = 'students.html'
+
+    def get(self, request):
+        all_students = Student.objects.all().order_by('-surname')
+        context = {
+            'all_students': all_students
+        }
+        return render(request, self.template_name, context)
 
 class AddDisciplineView(TemplateView):
     template_name = 'add_discipline.html'

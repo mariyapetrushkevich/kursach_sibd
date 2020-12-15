@@ -60,7 +60,7 @@
 .department_data {
     margin: auto;
     width: 1371px;
-    margin-top: 50px;
+    margin-top: 10px;
     cellspacing: 0;
     cellpadding: 0;
     background-color: #FFF5EE;
@@ -80,6 +80,12 @@
     text-decoration: none;
     color: #808080;
     font-size: 16px;
+}
+
+.search_form {
+    margin-left: 38px;
+    margin-top: 50px;
+    display: flex;
 }
 
     </style>
@@ -125,7 +131,7 @@
                         </a>
                     </div>
                     <div>
-                        <a href="/app/login/">
+                        <a href="/app/">
                             Выйти
                         </a>
                     </div>
@@ -133,10 +139,27 @@
             </nav>
         </header>
         <div class="category_name">
-            <p>Группы</p>
+            <p>Студенты</p>
         </div>
         <div class="add_department">
             <a href="/app/add_student">Добавить студента</a>
+        </div>
+        <div class="search_form">
+            <form id="first_form" action="/app/student_search_result" method="get">
+                <label for="q">Поиск: </label>
+                <input id="q" name="q" type="text" placeholder="Фамилия">
+            </form>
+            <form id="second_form" action="/app/student_stud_filter" method="get" style="margin-left: 15px;">
+                <label for="g">Фильтр: </label>
+                <input id="g" name="g" type="text" placeholder="Студ.билет">
+            </form>
+            <form id="third_form" action="/app/student_sorted_asc" method="get" style="margin-left: 15px;">
+                <label for="s">Сортировать: </label>
+                <input id="s"type="submit" value="Возр.">
+            </form>
+            <form action="/app/student_sorted_desc" method="get" style="margin-left: 5px;">
+                <input type="submit" value="Убыв.">
+            </form>
         </div>
         <table class="department_data" rules="all">
             <tr>

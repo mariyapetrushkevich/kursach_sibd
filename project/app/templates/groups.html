@@ -60,7 +60,7 @@
 .department_data {
     margin: auto;
     width: 1371px;
-    margin-top: 50px;
+    margin-top: 10px;
     cellspacing: 0;
     cellpadding: 0;
     background-color: #FFF5EE;
@@ -80,6 +80,12 @@
     text-decoration: none;
     color: #808080;
     font-size: 16px;
+}
+
+.search_form {
+    margin-left: 38px;
+    margin-top: 50px;
+    display: flex;
 }
 
     </style>
@@ -125,7 +131,7 @@
                         </a>
                     </div>
                     <div>
-                        <a href="/app/login/">
+                        <a href="/app/">
                             Выйти
                         </a>
                     </div>
@@ -137,6 +143,12 @@
         </div>
         <div class="add_department">
             <a href="/app/add_group">Добавить группу</a>
+        </div>
+         <div class="search_form">
+             <form action="/app/filter_group" method="get">
+                 <label for="q">Фильтр: </label>
+                <input id="q" name="q" type="text" placeholder="Курс">
+             </form>
         </div>
         <table class="department_data" rules="all">
             <tr>

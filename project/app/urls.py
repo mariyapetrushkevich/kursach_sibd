@@ -18,7 +18,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('login/', views.LoginFormView.as_view()),
+    path('', views.LoginFormView.as_view()),
     path('departments/', views.MainView.as_view()),
     path('logout/', views.LogoutView.as_view),
     path('specialities/', views.SpecialitiesView.as_view()),
@@ -45,5 +45,10 @@ urlpatterns = [
     path('add_vedomost/', views.AddVedomostView.as_view()),
     path('delete_vedomost/<int:id>/', views.delete_vedomost),
     path('add_spravka/', views.AddSpravkaView.as_view()),
-    path('delete_spravka/<int:id>/', views.delete_spravka)
+    path('delete_spravka/<int:id>/', views.delete_spravka),
+    path('student_search_result', views.StudentSearchResultView.as_view()),
+    path('student_stud_filter', views.FilteredStudentView.as_view()),
+    path('student_sorted_asc', views.StudentSortedAsc.as_view()),
+    path('student_sorted_desc', views.StudentSortedDesc.as_view()),
+    path('filter_group', views.FilterGroup.as_view())
 ]
